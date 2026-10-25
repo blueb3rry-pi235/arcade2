@@ -4,7 +4,7 @@ GAMES_DIR = "offline"
 OUTPUT_FILE = "index.html"
 game_links = []
 
-# 1. Scan the offline folder
+# 1. Read titles safely out of the offline folder directory
 if os.path.exists(GAMES_DIR):
     for item in sorted(os.listdir(GAMES_DIR)):
         item_path = os.path.join(GAMES_DIR, item)
@@ -16,7 +16,7 @@ if os.path.exists(GAMES_DIR):
                 name = item.replace("-", " ").replace("_", " ").title()
                 game_links.append((name, f"offline/{item}/index.html"))
 
-# 2. Build the visual layout string
+# 2. Build out the interface page safely
 html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,8 +103,7 @@ html += """    </main>
 </body>
 </html>"""
 
-# 3. Save the final file
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     f.write(html)
 
-print("Menu created successfully!")
+print("Menu generated successfully!")
