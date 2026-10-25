@@ -1,0 +1,110 @@
+import os
+
+GAMES_DIR = "offline"
+OUTPUT_FILE = "index.html"
+game_links = []
+
+# 1. Scan the offline folder
+if os.path.exists(GAMES_DIR):
+    for item in sorted(os.listdir(GAMES_DIR)):
+        item_path = os.path.join(GAMES_DIR, item)
+        if os.path.isfile(item_path) and item.endswith(".html"):
+            name = item.replace(".html", "").replace("-", " ").replace("_", " ").title()
+            game_links.append((name, f"offline/{item}"))
+        elif os.path.isdir(item_path):
+            if os.path.exists(os.path.join(item_path, "index.html")):
+                name = item.replace("-", " ").replace("_", " ").title()
+                game_links.append((name, f"offline/{item}/index.html"))
+
+# 2. Build the visual layout string
+html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cloud Arcade</title>
+    <style>
+        body {{ font-family: system-ui, sans-serif; background: #121212; color: #fff; text-align: center; margin: 0; padding: 20px; }}
+        h1 {{ color: #00ff88; font-size: 2.5rem; margin-bottom: 5px; }}
+        p {{ color: #aaa; margin-top: 0; }}
+        .search-bar {{ padding: 14px 20px; width: 85%; max-width: 450px; border-radius: 30px; border: 1px solid #444; background: #1e1e1e; color: #fff; margin: 30px auto; display: block; font-size: 1.1rem; outline: none; transition: border-color 0.2s; }}
+        .search-bar:focus {{ border-color: #00ff88; }}
+        .arcade-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; max-width: 1300px; margin: 0 auto; }}
+        .game-card {{ background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-decoration: none; color: white; display: flex; flex-direction: column; justify-content: center; min-height: 90px; transition: transform 0.2s, border-color 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); cursor: pointer; }}
+        .game-card:hover {{ transform: translateY(-4px); border-color: #00ff88; background: #222222; }}
+        .game-title {{ font-weight: 600; font-size: 1.15rem; word-break: break-word; }}
+        .hidden {{ display: none !important; }}
+        
+        /* Game Player Overlay Styles */
+        #game-container {{ display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; flex-direction: column; }}
+        #arcade-navbar {{ background: #1a1a1a; display: flex; justify-content: center; gap: 10px; padding: 8px; border-bottom: 1px solid #333; }}
+        .nav-btn {{ background: #2a2a2a; color: #fff; border: 1px solid #444; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: background 0.2s; }}
+        .nav-btn:hover {{ background: #00ff88; color: #000; border-color: #00ff88; }}
+        #game-frame {{ flex-grow: 1; border: none; width: 100%; height: calc(100% - 45px); }}
+    </style>
+</head>
+<body>
+    <div id="main-arcade">
+        <h1>The Cloud Arcade</h1>
+        <p>Instantly playing {len(game_links)} games</p>
+        <input type="text" id="search" class="search-bar" placeholder="🔍 Search games instantly..." oninput="filterGames()">
+        <main class="arcade-grid">
+"""
+
+for name, url in game_links:
+    html += f"""        <div class="game-card" onclick="playGame('{url}')"><span class="game-title">{name}</span></div>\n"""
+
+html += """    </main>
+    </div>
+
+    <!-- Fixed Game Frame Overlay -->
+    <div id="game-container">
+        <div id="arcade-navbar">
+            <button class="nav-btn" onclick="toggleFullscreen()">📺 Fullscreen</button>
+            <button class="nav-btn" onclick="exitGame()">❌ Exit Game</button>
+        </div>
+        <iframe id="game-frame" src=""></iframe>
+    </div>
+
+    <script>
+        function filterGames() {
+            const q = document.getElementById("search").value.toLowerCase();
+            document.querySelectorAll(".game-card").forEach(c => {
+                c.classList.toggle("hidden", !c.textContent.toLowerCase().includes(q));
+            });
+        }
+
+        function playGame(url) {
+            document.getElementById("game-frame").src = url;
+            document.getElementById("game-container").style.display = "flex";
+            document.getElementById("main-arcade").style.display = "none";
+        }
+
+        function exitGame() {
+            document.getElementById("game-frame").src = "";
+            document.getElementById("game-container").style.display = "none";
+            document.getElementById("main-arcade").style.display = "block";
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        }
+
+        function toggleFullscreen() {
+            const container = document.getElementById("game-container");
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    alert("Error enabling fullscreen mode: " + err.message);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>"""
+
+# 3. Save the final file
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write(html)
+
+print("Menu created successfully!")
