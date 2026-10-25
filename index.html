@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cloud Arcade</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #121212; color: #fff; text-align: center; margin: 0; padding: 20px; }
+        h1 { color: #00ff88; font-size: 2.5rem; margin-bottom: 5px; }
+        p { color: #aaa; margin-top: 0; }
+        .search-bar { padding: 14px 20px; width: 85%; max-width: 450px; border-radius: 30px; border: 1px solid #444; background: #1e1e1e; color: #fff; margin: 30px auto; display: block; font-size: 1.1rem; outline: none; transition: border-color 0.2s; }
+        .search-bar:focus { border-color: #00ff88; }
+        .arcade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; max-width: 1300px; margin: 0 auto; }
+        .game-card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-decoration: none; color: white; display: flex; flex-direction: column; justify-content: center; min-height: 90px; transition: transform 0.2s, border-color 0.2s, background 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .game-card:hover { transform: translateY(-4px); border-color: #00ff88; background: #222222; }
+        .game-title { font-weight: 600; font-size: 1.15rem; word-break: break-word; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <h1>The Cloud Arcade</h1>
+    <p>Instantly playing 330 games</p>
+    <input type="text" id="search" class="search-bar" placeholder="🔍 Search games instantly..." oninput="filterGames()">
+    <main class="arcade-grid">
+        <a href="offline/1-on-1-soccer.html" class="game-card"><span class="game-title">1 On 1 Soccer</span></a>
+        <a href="offline/1-on-1-tennis.html" class="game-card"><span class="game-title">1 On 1 Tennis</span></a>
+        <a href="offline/1.12.html" class="game-card"><span class="game-title">1.12</span></a>
+        <a href="offline/1.12_WASM.html" class="game-card"><span class="game-title">1.12 Wasm</span></a>
+        <a href="offline/1.5.html" class="game-card"><span class="game-title">1.5</span></a>
+        <a href="offline/1.8.html" class="game-card"><span class="game-title">1.8</span></a>
+        <a href="offline/1.8_WASM.html" class="game-card"><span class="game-title">1.8 Wasm</span></a>
+        <a href="offline/10-minutes-till-dawn.html" class="game-card"><span class="game-title">10 Minutes Till Dawn</span></a>
+        <a href="offline/12-mini-battles.html" class="game-card"><span class="game-title">12 Mini Battles</span></a>
+        <a href="offline/1v1.lol.html" class="game-card"><span class="game-title">1V1.Lol</span></a>
+        <a href="offline/2048-cupcakes.html" class="game-card"><span class="game-title">2048 Cupcakes</span></a>
+        <a href="offline/2048.html" class="game-card"><span class="game-title">2048</span></a>
+        <a href="offline/3D-flight-simulator.html" class="game-card"><span class="game-title">3D Flight Simulator</span></a>
+        <a href="offline/3d-free-kick.html" class="game-card"><span class="game-title">3D Free Kick</span></a>
+        <a href="offline/8-ball-classic.html" class="game-card"><span class="game-title">8 Ball Classic</span></a>
+        <a href="offline/9007199254740992.html" class="game-card"><span class="game-title">9007199254740992</span></a>
+        <a href="offline/Alpha_1.2.6.html" class="game-card"><span class="game-title">Alpha 1.2.6</span></a>
+        <a href="offline/Beta_1.3.html" class="game-card"><span class="game-title">Beta 1.3</span></a>
+        <a href="offline/Indev.html" class="game-card"><span class="game-title">Indev</span></a>
+        <a href="offline/agar-io-lite.html" class="game-card"><span class="game-title">Agar Io Lite</span></a>
+        <a href="offline/age-of-war-2.html" class="game-card"><span class="game-title">Age Of War 2</span></a>
+        <a href="offline/age-of-war.html" class="game-card"><span class="game-title">Age Of War</span></a>
+        <a href="offline/ages-of-conflict.html" class="game-card"><span class="game-title">Ages Of Conflict</span></a>
+        <a href="offline/among-us.html" class="game-card"><span class="game-title">Among Us</span></a>
+        <a href="offline/angry-birds-showdown.html" class="game-card"><span class="game-title">Angry Birds Showdown</span></a>
+        <a href="offline/angry-birds-space.html" class="game-card"><span class="game-title">Angry Birds Space</span></a>
+        <a href="offline/angry-birds.html" class="game-card"><span class="game-title">Angry Birds</span></a>
+        <a href="offline/awesome-tanks-2.html" class="game-card"><span class="game-title">Awesome Tanks 2</span></a>
+        <a href="offline/awesome-tanks.html" class="game-card"><span class="game-title">Awesome Tanks</span></a>
+        <a href="offline/backrooms.html" class="game-card"><span class="game-title">Backrooms</span></a>
+        <a href="offline/bacon-may-die.html" class="game-card"><span class="game-title">Bacon May Die</span></a>
+        <a href="offline/bad-ice-cream-2.html" class="game-card"><span class="game-title">Bad Ice Cream 2</span></a>
+        <a href="offline/bad-ice-cream-3.html" class="game-card"><span class="game-title">Bad Ice Cream 3</span></a>
+        <a href="offline/bad-ice-cream.html" class="game-card"><span class="game-title">Bad Ice Cream</span></a>
+        <a href="offline/bad-parenting.html" class="game-card"><span class="game-title">Bad Parenting</span></a>
+        <a href="offline/bad-piggies.html" class="game-card"><span class="game-title">Bad Piggies</span></a>
+        <a href="offline/bad-time-simulator.html" class="game-card"><span class="game-title">Bad Time Simulator</span></a>
+        <a href="offline/baldis-basics.html" class="game-card"><span class="game-title">Baldis Basics</span></a>
+        <a href="offline/bank-robbery-2.html" class="game-card"><span class="game-title">Bank Robbery 2</span></a>
+        <a href="offline/bank-robbery-3.html" class="game-card"><span class="game-title">Bank Robbery 3</span></a>
+        <a href="offline/baseball-bros.html" class="game-card"><span class="game-title">Baseball Bros</span></a>
+        <a href="offline/basket-bros.html" class="game-card"><span class="game-title">Basket Bros</span></a>
+        <a href="offline/basket-random.html" class="game-card"><span class="game-title">Basket Random</span></a>
+        <a href="offline/basketball-legends.html" class="game-card"><span class="game-title">Basketball Legends</span></a>
+        <a href="offline/basketball-stars.html" class="game-card"><span class="game-title">Basketball Stars</span></a>
+        <a href="offline/big-ice-tower-tiny-square.html" class="game-card"><span class="game-title">Big Ice Tower Tiny Square</span></a>
+        <a href="offline/big-neon-tower-tiny-square.html" class="game-card"><span class="game-title">Big Neon Tower Tiny Square</span></a>
+        <a href="offline/big-tower-tiny-square-2.html" class="game-card"><span class="game-title">Big Tower Tiny Square 2</span></a>
+        <a href="offline/big-tower-tiny-square.html" class="game-card"><span class="game-title">Big Tower Tiny Square</span></a>
+        <a href="offline/bitlife.html" class="game-card"><span class="game-title">Bitlife</span></a>
+        <a href="offline/blocky-snakes.html" class="game-card"><span class="game-title">Blocky Snakes</span></a>
+        <a href="offline/bloons-TD-2.html" class="game-card"><span class="game-title">Bloons Td 2</span></a>
+        <a href="offline/bloons-TD-3.html" class="game-card"><span class="game-title">Bloons Td 3</span></a>
+        <a href="offline/bloons-TD-4.html" class="game-card"><span class="game-title">Bloons Td 4</span></a>
+        <a href="offline/bloons-TD-5.html" class="game-card"><span class="game-title">Bloons Td 5</span></a>
+        <a href="offline/bloons-TD.html" class="game-card"><span class="game-title">Bloons Td</span></a>
+        <a href="offline/bloxorz.html" class="game-card"><span class="game-title">Bloxorz</span></a>
+        <a href="offline/blumgi-racers.html" class="game-card"><span class="game-title">Blumgi Racers</span></a>
+        <a href="offline/blumgi-rocket.html" class="game-card"><span class="game-title">Blumgi Rocket</span></a>
+        <a href="offline/bob-the-robber-2.html" class="game-card"><span class="game-title">Bob The Robber 2</span></a>
+        <a href="offline/bob-the-robber-5.html" class="game-card"><span class="game-title">Bob The Robber 5</span></a>
+        <a href="offline/bob-the-robber.html" class="game-card"><span class="game-title">Bob The Robber</span></a>
+        <a href="offline/bouncy-motors.html" class="game-card"><span class="game-title">Bouncy Motors</span></a>
+        <a href="offline/bow-masters.html" class="game-card"><span class="game-title">Bow Masters</span></a>
+        <a href="offline/boxel-rebound.html" class="game-card"><span class="game-title">Boxel Rebound</span></a>
+        <a href="offline/breaking-the-bank.html" class="game-card"><span class="game-title">Breaking The Bank</span></a>
+        <a href="offline/bubble-shooter.html" class="game-card"><span class="game-title">Bubble Shooter</span></a>
+        <a href="offline/burrito-bison-launcha-libre.html" class="game-card"><span class="game-title">Burrito Bison Launcha Libre</span></a>
+        <a href="offline/candy-crush.html" class="game-card"><span class="game-title">Candy Crush</span></a>
+        <a href="offline/capybara-clicker.html" class="game-card"><span class="game-title">Capybara Clicker</span></a>
+        <a href="offline/car-drawing.html" class="game-card"><span class="game-title">Car Drawing</span></a>
+        <a href="offline/car-king-arena.html" class="game-card"><span class="game-title">Car King Arena</span></a>
+        <a href="offline/chaos-faction-2.html" class="game-card"><span class="game-title">Chaos Faction 2</span></a>
+        <a href="offline/chess.html" class="game-card"><span class="game-title">Chess</span></a>
+        <a href="offline/choppy-orc.html" class="game-card"><span class="game-title">Choppy Orc</span></a>
+        <a href="offline/circloO-2.html" class="game-card"><span class="game-title">Circloo 2</span></a>
+        <a href="offline/circloO.html" class="game-card"><span class="game-title">Circloo</span></a>
+        <a href="offline/clash-of-vikings.html" class="game-card"><span class="game-title">Clash Of Vikings</span></a>
+        <a href="offline/cleanup-io.html" class="game-card"><span class="game-title">Cleanup Io</span></a>
+        <a href="offline/cluster-rush.html" class="game-card"><span class="game-title">Cluster Rush</span></a>
+        <a href="offline/coreball.html" class="game-card"><span class="game-title">Coreball</span></a>
+        <a href="offline/crazy-cars.html" class="game-card"><span class="game-title">Crazy Cars</span></a>
+        <a href="offline/crazy-cattle-3D.html" class="game-card"><span class="game-title">Crazy Cattle 3D</span></a>
+        <a href="offline/crazy-crash-landing.html" class="game-card"><span class="game-title">Crazy Crash Landing</span></a>
+        <a href="offline/crazy-motorcycle.html" class="game-card"><span class="game-title">Crazy Motorcycle</span></a>
+        <a href="offline/cut-the-rope-2.html" class="game-card"><span class="game-title">Cut The Rope 2</span></a>
+        <a href="offline/cut-the-rope-holiday-gift.html" class="game-card"><span class="game-title">Cut The Rope Holiday Gift</span></a>
+        <a href="offline/cut-the-rope-time-travel.html" class="game-card"><span class="game-title">Cut The Rope Time Travel</span></a>
+        <a href="offline/cut-the-rope.html" class="game-card"><span class="game-title">Cut The Rope</span></a>
+        <a href="offline/dadish-2.html" class="game-card"><span class="game-title">Dadish 2</span></a>
+        <a href="offline/dadish-3.html" class="game-card"><span class="game-title">Dadish 3</span></a>
+        <a href="offline/dadish.html" class="game-card"><span class="game-title">Dadish</span></a>
+        <a href="offline/deadly-descent.html" class="game-card"><span class="game-title">Deadly Descent</span></a>
+        <a href="offline/death-chase.html" class="game-card"><span class="game-title">Death Chase</span></a>
+        <a href="offline/death-run-3D.html" class="game-card"><span class="game-title">Death Run 3D</span></a>
+        <a href="offline/demolition-derby-crash-racing.html" class="game-card"><span class="game-title">Demolition Derby Crash Racing</span></a>
+        <a href="offline/doodle-jump.html" class="game-card"><span class="game-title">Doodle Jump</span></a>
+        <a href="offline/draw-climber.html" class="game-card"><span class="game-title">Draw Climber</span></a>
+        <a href="offline/drift-hunters-pro.html" class="game-card"><span class="game-title">Drift Hunters Pro</span></a>
+        <a href="offline/duck-life-2.html" class="game-card"><span class="game-title">Duck Life 2</span></a>
+        <a href="offline/duck-life-3.html" class="game-card"><span class="game-title">Duck Life 3</span></a>
+        <a href="offline/duck-life-4.html" class="game-card"><span class="game-title">Duck Life 4</span></a>
+        <a href="offline/duck-life-5.html" class="game-card"><span class="game-title">Duck Life 5</span></a>
+        <a href="offline/duck-life.html" class="game-card"><span class="game-title">Duck Life</span></a>
+        <a href="offline/ducklings-io.html" class="game-card"><span class="game-title">Ducklings Io</span></a>
+        <a href="offline/eagle-ride.html" class="game-card"><span class="game-title">Eagle Ride</span></a>
+        <a href="offline/earn-to-die-2.html" class="game-card"><span class="game-title">Earn To Die 2</span></a>
+        <a href="offline/earn-to-die.html" class="game-card"><span class="game-title">Earn To Die</span></a>
+        <a href="offline/eggy-car.html" class="game-card"><span class="game-title">Eggy Car</span></a>
+        <a href="offline/escape-road-2.html" class="game-card"><span class="game-title">Escape Road 2</span></a>
+        <a href="offline/escape-road-3.html" class="game-card"><span class="game-title">Escape Road 3</span></a>
+        <a href="offline/escape-road.html" class="game-card"><span class="game-title">Escape Road</span></a>
+        <a href="offline/escaping-the-prison.html" class="game-card"><span class="game-title">Escaping The Prison</span></a>
+        <a href="offline/eugenes-life.html" class="game-card"><span class="game-title">Eugenes Life</span></a>
+        <a href="offline/evil-glitch.html" class="game-card"><span class="game-title">Evil Glitch</span></a>
+        <a href="offline/fancy-pants-adventure-2.html" class="game-card"><span class="game-title">Fancy Pants Adventure 2</span></a>
+        <a href="offline/fancy-pants-adventure.html" class="game-card"><span class="game-title">Fancy Pants Adventure</span></a>
+        <a href="offline/fireblob.html" class="game-card"><span class="game-title">Fireblob</span></a>
+        <a href="offline/fireboy-and-watergirl-2.html" class="game-card"><span class="game-title">Fireboy And Watergirl 2</span></a>
+        <a href="offline/fireboy-and-watergirl-3.html" class="game-card"><span class="game-title">Fireboy And Watergirl 3</span></a>
+        <a href="offline/fireboy-and-watergirl-4.html" class="game-card"><span class="game-title">Fireboy And Watergirl 4</span></a>
+        <a href="offline/fireboy-and-watergirl.html" class="game-card"><span class="game-title">Fireboy And Watergirl</span></a>
+        <a href="offline/flappy-bird.html" class="game-card"><span class="game-title">Flappy Bird</span></a>
+        <a href="offline/fleeing-the-complex.html" class="game-card"><span class="game-title">Fleeing The Complex</span></a>
+        <a href="offline/flood-runner-2.html" class="game-card"><span class="game-title">Flood Runner 2</span></a>
+        <a href="offline/flood-runner-3.html" class="game-card"><span class="game-title">Flood Runner 3</span></a>
+        <a href="offline/flood-runner-4.html" class="game-card"><span class="game-title">Flood Runner 4</span></a>
+        <a href="offline/fnaf-2.html" class="game-card"><span class="game-title">Fnaf 2</span></a>
+        <a href="offline/fnaf-3.html" class="game-card"><span class="game-title">Fnaf 3</span></a>
+        <a href="offline/fnaf-4.html" class="game-card"><span class="game-title">Fnaf 4</span></a>
+        <a href="offline/fnaf-sister-location.html" class="game-card"><span class="game-title">Fnaf Sister Location</span></a>
+        <a href="offline/fnaf.html" class="game-card"><span class="game-title">Fnaf</span></a>
+        <a href="offline/football-bros.html" class="game-card"><span class="game-title">Football Bros</span></a>
+        <a href="offline/football-legends.html" class="game-card"><span class="game-title">Football Legends</span></a>
+        <a href="offline/free-rider-3.html" class="game-card"><span class="game-title">Free Rider 3</span></a>
+        <a href="offline/friday-night-funkin.html" class="game-card"><span class="game-title">Friday Night Funkin</span></a>
+        <a href="offline/fruit-ninja.html" class="game-card"><span class="game-title">Fruit Ninja</span></a>
+        <a href="offline/funny-battle-2.html" class="game-card"><span class="game-title">Funny Battle 2</span></a>
+        <a href="offline/funny-battle.html" class="game-card"><span class="game-title">Funny Battle</span></a>
+        <a href="offline/funny-mad-racing.html" class="game-card"><span class="game-title">Funny Mad Racing</span></a>
+        <a href="offline/funny-shooter-2.html" class="game-card"><span class="game-title">Funny Shooter 2</span></a>
+        <a href="offline/geometry-dash-lite.html" class="game-card"><span class="game-title">Geometry Dash Lite</span></a>
+        <a href="offline/geometry-dash.html" class="game-card"><span class="game-title">Geometry Dash</span></a>
+        <a href="offline/geometry-vibes.html" class="game-card"><span class="game-title">Geometry Vibes</span></a>
+        <a href="offline/get-on-top.html" class="game-card"><span class="game-title">Get On Top</span></a>
+        <a href="offline/getaway-shootout.html" class="game-card"><span class="game-title">Getaway Shootout</span></a>
+        <a href="offline/gladi-hoppers.html" class="game-card"><span class="game-title">Gladi Hoppers</span></a>
+        <a href="offline/google-baseball.html" class="game-card"><span class="game-title">Google Baseball</span></a>
+        <a href="offline/google-dino.html" class="game-card"><span class="game-title">Google Dino</span></a>
+        <a href="offline/granny-2.html" class="game-card"><span class="game-title">Granny 2</span></a>
+        <a href="offline/granny.html" class="game-card"><span class="game-title">Granny</span></a>
+        <a href="offline/guess-their-answer.html" class="game-card"><span class="game-title">Guess Their Answer</span></a>
+        <a href="offline/hanger-2.html" class="game-card"><span class="game-title">Hanger 2</span></a>
+        <a href="offline/happy-wheels.html" class="game-card"><span class="game-title">Happy Wheels</span></a>
+        <a href="offline/helix-jump.html" class="game-card"><span class="game-title">Helix Jump</span></a>
+        <a href="offline/highway-traffic.html" class="game-card"><span class="game-title">Highway Traffic</span></a>
+        <a href="offline/hill-climb-racing-lite.html" class="game-card"><span class="game-title">Hill Climb Racing Lite</span></a>
+        <a href="offline/hole-io.html" class="game-card"><span class="game-title">Hole Io</span></a>
+        <a href="offline/house-of-hazards.html" class="game-card"><span class="game-title">House Of Hazards</span></a>
+        <a href="offline/hover-racer-drive.html" class="game-card"><span class="game-title">Hover Racer Drive</span></a>
+        <a href="offline/ice-dodo.html" class="game-card"><span class="game-title">Ice Dodo</span></a>
+        <a href="offline/idle-breakout.html" class="game-card"><span class="game-title">Idle Breakout</span></a>
+        <a href="offline/idle-dice.html" class="game-card"><span class="game-title">Idle Dice</span></a>
+        <a href="offline/infiltrating-the-airship.html" class="game-card"><span class="game-title">Infiltrating The Airship</span></a>
+        <a href="offline/iron-snout.html" class="game-card"><span class="game-title">Iron Snout</span></a>
+        <a href="offline/jacksmith.html" class="game-card"><span class="game-title">Jacksmith</span></a>
+        <a href="offline/jetpack-joyride.html" class="game-card"><span class="game-title">Jetpack Joyride</span></a>
+        <a href="offline/johnny-trigger.html" class="game-card"><span class="game-title">Johnny Trigger</span></a>
+        <a href="offline/jumping-shell.html" class="game-card"><span class="game-title">Jumping Shell</span></a>
+        <a href="offline/karate-bros.html" class="game-card"><span class="game-title">Karate Bros</span></a>
+        <a href="offline/kart-bros.html" class="game-card"><span class="game-title">Kart Bros</span></a>
+        <a href="offline/kittytoy.html" class="game-card"><span class="game-title">Kittytoy</span></a>
+        <a href="offline/learn-to-fly-2.html" class="game-card"><span class="game-title">Learn To Fly 2</span></a>
+        <a href="offline/learn-to-fly-3.html" class="game-card"><span class="game-title">Learn To Fly 3</span></a>
+        <a href="offline/learn-to-fly-idle.html" class="game-card"><span class="game-title">Learn To Fly Idle</span></a>
+        <a href="offline/learn-to-fly.html" class="game-card"><span class="game-title">Learn To Fly</span></a>
+        <a href="offline/level-devil.html" class="game-card"><span class="game-title">Level Devil</span></a>
+        <a href="offline/little-alchemy-2.html" class="game-card"><span class="game-title">Little Alchemy 2</span></a>
+        <a href="offline/madalin-stunt-cars-2.html" class="game-card"><span class="game-title">Madalin Stunt Cars 2</span></a>
+        <a href="offline/madness-project-nexus.html" class="game-card"><span class="game-title">Madness Project Nexus</span></a>
+        <a href="offline/melon-playground.html" class="game-card"><span class="game-title">Melon Playground</span></a>
+        <a href="offline/merge-round-racers.html" class="game-card"><span class="game-title">Merge Round Racers</span></a>
+        <a href="offline/minesweeper.html" class="game-card"><span class="game-title">Minesweeper</span></a>
+        <a href="offline/monster-tracks.html" class="game-card"><span class="game-title">Monster Tracks</span></a>
+        <a href="offline/motherload.html" class="game-card"><span class="game-title">Motherload</span></a>
+        <a href="offline/moto-x3m-2.html" class="game-card"><span class="game-title">Moto X3M 2</span></a>
+        <a href="offline/moto-x3m-3.html" class="game-card"><span class="game-title">Moto X3M 3</span></a>
+        <a href="offline/moto-x3m-pool-party.html" class="game-card"><span class="game-title">Moto X3M Pool Party</span></a>
+        <a href="offline/moto-x3m-spooky-land.html" class="game-card"><span class="game-title">Moto X3M Spooky Land</span></a>
+        <a href="offline/moto-x3m-winter.html" class="game-card"><span class="game-title">Moto X3M Winter</span></a>
+        <a href="offline/murder.html" class="game-card"><span class="game-title">Murder</span></a>
+        <a href="offline/noob-miner.html" class="game-card"><span class="game-title">Noob Miner</span></a>
+        <a href="offline/openTTD.html" class="game-card"><span class="game-title">Openttd</span></a>
+        <a href="offline/opposite-day.html" class="game-card"><span class="game-title">Opposite Day</span></a>
+        <a href="offline/ovo-2.html" class="game-card"><span class="game-title">Ovo 2</span></a>
+        <a href="offline/ovo-3-dimensions.html" class="game-card"><span class="game-title">Ovo 3 Dimensions</span></a>
+        <a href="offline/ovo.html" class="game-card"><span class="game-title">Ovo</span></a>
+        <a href="offline/pac-man.html" class="game-card"><span class="game-title">Pac Man</span></a>
+        <a href="offline/papas-bakeria.html" class="game-card"><span class="game-title">Papas Bakeria</span></a>
+        <a href="offline/papas-burgeria.html" class="game-card"><span class="game-title">Papas Burgeria</span></a>
+        <a href="offline/papas-cheeseria.html" class="game-card"><span class="game-title">Papas Cheeseria</span></a>
+        <a href="offline/papas-cupcakeria.html" class="game-card"><span class="game-title">Papas Cupcakeria</span></a>
+        <a href="offline/papas-donuteria.html" class="game-card"><span class="game-title">Papas Donuteria</span></a>
+        <a href="offline/papas-freezeria.html" class="game-card"><span class="game-title">Papas Freezeria</span></a>
+        <a href="offline/papas-hot-doggeria.html" class="game-card"><span class="game-title">Papas Hot Doggeria</span></a>
+        <a href="offline/papas-pancakeria.html" class="game-card"><span class="game-title">Papas Pancakeria</span></a>
+        <a href="offline/papas-pastaria.html" class="game-card"><span class="game-title">Papas Pastaria</span></a>
+        <a href="offline/papas-pizzeria.html" class="game-card"><span class="game-title">Papas Pizzeria</span></a>
+        <a href="offline/papas-scooperia.html" class="game-card"><span class="game-title">Papas Scooperia</span></a>
+        <a href="offline/papas-sushiria.html" class="game-card"><span class="game-title">Papas Sushiria</span></a>
+        <a href="offline/papas-taco-mia.html" class="game-card"><span class="game-title">Papas Taco Mia</span></a>
+        <a href="offline/papas-wingeria.html" class="game-card"><span class="game-title">Papas Wingeria</span></a>
+        <a href="offline/parking-fury-2.html" class="game-card"><span class="game-title">Parking Fury 2</span></a>
+        <a href="offline/parking-fury-3.html" class="game-card"><span class="game-title">Parking Fury 3</span></a>
+        <a href="offline/parking-fury.html" class="game-card"><span class="game-title">Parking Fury</span></a>
+        <a href="offline/picos-school.html" class="game-card"><span class="game-title">Picos School</span></a>
+        <a href="offline/ping-pong-chaos.html" class="game-card"><span class="game-title">Ping Pong Chaos</span></a>
+        <a href="offline/pixel-speedrun.html" class="game-card"><span class="game-title">Pixel Speedrun</span></a>
+        <a href="offline/plants-vs-zombies.html" class="game-card"><span class="game-title">Plants Vs Zombies</span></a>
+        <a href="offline/plonky.html" class="game-card"><span class="game-title">Plonky</span></a>
+        <a href="offline/polytrack.html" class="game-card"><span class="game-title">Polytrack</span></a>
+        <a href="offline/poor-bunny.html" class="game-card"><span class="game-title">Poor Bunny</span></a>
+        <a href="offline/pou.html" class="game-card"><span class="game-title">Pou</span></a>
+        <a href="offline/ragdoll-hit.html" class="game-card"><span class="game-title">Ragdoll Hit</span></a>
+        <a href="offline/ragdoll-soccer.html" class="game-card"><span class="game-title">Ragdoll Soccer</span></a>
+        <a href="offline/red-ball-4-vol-1.html" class="game-card"><span class="game-title">Red Ball 4 Vol 1</span></a>
+        <a href="offline/red-ball-4-vol-2.html" class="game-card"><span class="game-title">Red Ball 4 Vol 2</span></a>
+        <a href="offline/red-ball-4-vol-3.html" class="game-card"><span class="game-title">Red Ball 4 Vol 3</span></a>
+        <a href="offline/retro-bowl-college.html" class="game-card"><span class="game-title">Retro Bowl College</span></a>
+        <a href="offline/retro-bowl.html" class="game-card"><span class="game-title">Retro Bowl</span></a>
+        <a href="offline/retro-highway.html" class="game-card"><span class="game-title">Retro Highway</span></a>
+        <a href="offline/retro-ping-pong.html" class="game-card"><span class="game-title">Retro Ping Pong</span></a>
+        <a href="offline/riddle-school-2.html" class="game-card"><span class="game-title">Riddle School 2</span></a>
+        <a href="offline/riddle-school-3.html" class="game-card"><span class="game-title">Riddle School 3</span></a>
+        <a href="offline/riddle-school-4.html" class="game-card"><span class="game-title">Riddle School 4</span></a>
+        <a href="offline/riddle-school-5.html" class="game-card"><span class="game-title">Riddle School 5</span></a>
+        <a href="offline/riddle-school.html" class="game-card"><span class="game-title">Riddle School</span></a>
+        <a href="offline/riddle-transfer-2.html" class="game-card"><span class="game-title">Riddle Transfer 2</span></a>
+        <a href="offline/riddle-transfer.html" class="game-card"><span class="game-title">Riddle Transfer</span></a>
+        <a href="offline/rocket-soccer-derby.html" class="game-card"><span class="game-title">Rocket Soccer Derby</span></a>
+        <a href="offline/rooftop-run.html" class="game-card"><span class="game-title">Rooftop Run</span></a>
+        <a href="offline/rooftop-snipers-2.html" class="game-card"><span class="game-title">Rooftop Snipers 2</span></a>
+        <a href="offline/run-2.html" class="game-card"><span class="game-title">Run 2</span></a>
+        <a href="offline/run-3.html" class="game-card"><span class="game-title">Run 3</span></a>
+        <a href="offline/run.html" class="game-card"><span class="game-title">Run</span></a>
+        <a href="offline/sand-game.html" class="game-card"><span class="game-title">Sand Game</span></a>
+        <a href="offline/sandbox-city.html" class="game-card"><span class="game-title">Sandbox City</span></a>
+        <a href="offline/short-life.html" class="game-card"><span class="game-title">Short Life</span></a>
+        <a href="offline/six-cats-under.html" class="game-card"><span class="game-title">Six Cats Under</span></a>
+        <a href="offline/slope-2-player.html" class="game-card"><span class="game-title">Slope 2 Player</span></a>
+        <a href="offline/slope-3.html" class="game-card"><span class="game-title">Slope 3</span></a>
+        <a href="offline/slope.html" class="game-card"><span class="game-title">Slope</span></a>
+        <a href="offline/slow-roads.html" class="game-card"><span class="game-title">Slow Roads</span></a>
+        <a href="offline/sm-63.html" class="game-card"><span class="game-title">Sm 63</span></a>
+        <a href="offline/sm-64.html" class="game-card"><span class="game-title">Sm 64</span></a>
+        <a href="offline/snail-bob-2.html" class="game-card"><span class="game-title">Snail Bob 2</span></a>
+        <a href="offline/snail-bob-3.html" class="game-card"><span class="game-title">Snail Bob 3</span></a>
+        <a href="offline/snail-bob-4.html" class="game-card"><span class="game-title">Snail Bob 4</span></a>
+        <a href="offline/snail-bob-5.html" class="game-card"><span class="game-title">Snail Bob 5</span></a>
+        <a href="offline/snail-bob-6.html" class="game-card"><span class="game-title">Snail Bob 6</span></a>
+        <a href="offline/snail-bob-7.html" class="game-card"><span class="game-title">Snail Bob 7</span></a>
+        <a href="offline/snail-bob-8.html" class="game-card"><span class="game-title">Snail Bob 8</span></a>
+        <a href="offline/snail-bob.html" class="game-card"><span class="game-title">Snail Bob</span></a>
+        <a href="offline/snowball-io.html" class="game-card"><span class="game-title">Snowball Io</span></a>
+        <a href="offline/soccer-bros.html" class="game-card"><span class="game-title">Soccer Bros</span></a>
+        <a href="offline/space-is-key-2.html" class="game-card"><span class="game-title">Space Is Key 2</span></a>
+        <a href="offline/space-is-key.html" class="game-card"><span class="game-title">Space Is Key</span></a>
+        <a href="offline/space-waves.html" class="game-card"><span class="game-title">Space Waves</span></a>
+        <a href="offline/spacebar-clicker.html" class="game-card"><span class="game-title">Spacebar Clicker</span></a>
+        <a href="offline/speed-stars.html" class="game-card"><span class="game-title">Speed Stars</span></a>
+        <a href="offline/sprunki.html" class="game-card"><span class="game-title">Sprunki</span></a>
+        <a href="offline/stack.html" class="game-card"><span class="game-title">Stack</span></a>
+        <a href="offline/stacktris.html" class="game-card"><span class="game-title">Stacktris</span></a>
+        <a href="offline/state-io.html" class="game-card"><span class="game-title">State Io</span></a>
+        <a href="offline/stealing-the-diamond.html" class="game-card"><span class="game-title">Stealing The Diamond</span></a>
+        <a href="offline/stick-archers-battle.html" class="game-card"><span class="game-title">Stick Archers Battle</span></a>
+        <a href="offline/stick-fighter.html" class="game-card"><span class="game-title">Stick Fighter</span></a>
+        <a href="offline/stick-merge.html" class="game-card"><span class="game-title">Stick Merge</span></a>
+        <a href="offline/stickman-hook.html" class="game-card"><span class="game-title">Stickman Hook</span></a>
+        <a href="offline/subway-surfers-beijing.html" class="game-card"><span class="game-title">Subway Surfers Beijing</span></a>
+        <a href="offline/subway-surfers-havana.html" class="game-card"><span class="game-title">Subway Surfers Havana</span></a>
+        <a href="offline/subway-surfers-san-francisco.html" class="game-card"><span class="game-title">Subway Surfers San Francisco</span></a>
+        <a href="offline/super-bike-the-champion.html" class="game-card"><span class="game-title">Super Bike The Champion</span></a>
+        <a href="offline/super-liquid-soccer.html" class="game-card"><span class="game-title">Super Liquid Soccer</span></a>
+        <a href="offline/super-star-car.html" class="game-card"><span class="game-title">Super Star Car</span></a>
+        <a href="offline/superhot.html" class="game-card"><span class="game-title">Superhot</span></a>
+        <a href="offline/table-tennis-world-tour.html" class="game-card"><span class="game-title">Table Tennis World Tour</span></a>
+        <a href="offline/tag.html" class="game-card"><span class="game-title">Tag</span></a>
+        <a href="offline/tanuki-sunset.html" class="game-card"><span class="game-title">Tanuki Sunset</span></a>
+        <a href="offline/tap-road.html" class="game-card"><span class="game-title">Tap Road</span></a>
+        <a href="offline/temple-of-boom.html" class="game-card"><span class="game-title">Temple Of Boom</span></a>
+        <a href="offline/territorial-io.html" class="game-card"><span class="game-title">Territorial Io</span></a>
+        <a href="offline/tetrominoes.html" class="game-card"><span class="game-title">Tetrominoes</span></a>
+        <a href="offline/the-impossible-quiz-2.html" class="game-card"><span class="game-title">The Impossible Quiz 2</span></a>
+        <a href="offline/the-impossible-quiz.html" class="game-card"><span class="game-title">The Impossible Quiz</span></a>
+        <a href="offline/there-is-no-g.html" class="game-card"><span class="game-title">There Is No G</span></a>
+        <a href="offline/they-are-coming.html" class="game-card"><span class="game-title">They Are Coming</span></a>
+        <a href="offline/this-is-the-only-level-too.html" class="game-card"><span class="game-title">This Is The Only Level Too</span></a>
+        <a href="offline/this-is-the-only-level.html" class="game-card"><span class="game-title">This Is The Only Level</span></a>
+        <a href="offline/time-shooter-2.html" class="game-card"><span class="game-title">Time Shooter 2</span></a>
+        <a href="offline/tiny-fishing.html" class="game-card"><span class="game-title">Tiny Fishing</span></a>
+        <a href="offline/trap-the-cat.html" class="game-card"><span class="game-title">Trap The Cat</span></a>
+        <a href="offline/trivia-crack.html" class="game-card"><span class="game-title">Trivia Crack</span></a>
+        <a href="offline/tube-jumpers.html" class="game-card"><span class="game-title">Tube Jumpers</span></a>
+        <a href="offline/tunnel-rush.html" class="game-card"><span class="game-title">Tunnel Rush</span></a>
+        <a href="offline/unicycle-hero.html" class="game-card"><span class="game-title">Unicycle Hero</span></a>
+        <a href="offline/vex-4.html" class="game-card"><span class="game-title">Vex 4</span></a>
+        <a href="offline/vex-5.html" class="game-card"><span class="game-title">Vex 5</span></a>
+        <a href="offline/vex-x3m-2.html" class="game-card"><span class="game-title">Vex X3M 2</span></a>
+        <a href="offline/vex-x3m.html" class="game-card"><span class="game-title">Vex X3M</span></a>
+        <a href="offline/volley-random.html" class="game-card"><span class="game-title">Volley Random</span></a>
+        <a href="offline/war-the-knights.html" class="game-card"><span class="game-title">War The Knights</span></a>
+        <a href="offline/we-become-what-we-behold.html" class="game-card"><span class="game-title">We Become What We Behold</span></a>
+        <a href="offline/wheelie-bike.html" class="game-card"><span class="game-title">Wheelie Bike</span></a>
+        <a href="offline/wheely-2.html" class="game-card"><span class="game-title">Wheely 2</span></a>
+        <a href="offline/wheely-3.html" class="game-card"><span class="game-title">Wheely 3</span></a>
+        <a href="offline/wheely-4.html" class="game-card"><span class="game-title">Wheely 4</span></a>
+        <a href="offline/wheely-5.html" class="game-card"><span class="game-title">Wheely 5</span></a>
+        <a href="offline/wheely-6.html" class="game-card"><span class="game-title">Wheely 6</span></a>
+        <a href="offline/wheely-7.html" class="game-card"><span class="game-title">Wheely 7</span></a>
+        <a href="offline/wheely-8.html" class="game-card"><span class="game-title">Wheely 8</span></a>
+        <a href="offline/wheely.html" class="game-card"><span class="game-title">Wheely</span></a>
+        <a href="offline/wordle-unlimited.html" class="game-card"><span class="game-title">Wordle Unlimited</span></a>
+        <a href="offline/worlds-hardest-game-2.html" class="game-card"><span class="game-title">Worlds Hardest Game 2</span></a>
+        <a href="offline/worlds-hardest-game-3.html" class="game-card"><span class="game-title">Worlds Hardest Game 3</span></a>
+        <a href="offline/worlds-hardest-game.html" class="game-card"><span class="game-title">Worlds Hardest Game</span></a>
+        <a href="offline/wrestle-bros.html" class="game-card"><span class="game-title">Wrestle Bros</span></a>
+        <a href="offline/yohoho-io.html" class="game-card"><span class="game-title">Yohoho Io</span></a>
+        <a href="offline/zombie-rush.html" class="game-card"><span class="game-title">Zombie Rush</span></a>
+        <a href="offline/zrist.html" class="game-card"><span class="game-title">Zrist</span></a>
+    </main>
+    <script>
+        function filterGames() {
+            const q = document.getElementById("search").value.toLowerCase();
+            document.querySelectorAll(".game-card").forEach(c => {
+                c.classList.toggle("hidden", !c.textContent.toLowerCase().includes(q));
+            });
+        }
+    </script>
+</body>
+</html>
